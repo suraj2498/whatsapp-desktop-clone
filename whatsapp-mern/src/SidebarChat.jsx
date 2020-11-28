@@ -2,13 +2,17 @@ import React from 'react';
 import { Avatar } from '@material-ui/core';
 import './sidebarChat.css';
 
-const SidebarChat = () => {
+const SidebarChat = ({ name, id, onClick }) => {
+
+  const passRoomDetails = () => {
+    onClick(name, id);
+  }
+
   return (
-    <div className="sidebarChat">
-      <Avatar src={``}/>
+    <div className="sidebarChat" onClick={passRoomDetails}>
+      <Avatar src={`https://avatars.dicebear.com/api/bottts/${id}.svg`}/>
       <div className="sidebarChat__info">
-        <h2>Chat Room Name</h2>
-        <p>Last Sent chat</p>
+        <h2>{name}</h2>
       </div>
     </div>
   )

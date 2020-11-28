@@ -1,31 +1,29 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import './sidebar.css';
-import { IconButton } from '@material-ui/core';
-import LargeDonutIcon from '@material-ui/icons/DonutLarge';
-import ChatIcon from '@material-ui/icons/Chat';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { IconButton } from '@material-ui/core'; 
+import AddIcon from '@material-ui/icons/Add';
 import SearchOutlined from '@material-ui/icons/SearchOutlined';
 import SidebarChat from './SidebarChat';
 
 
-const Sidebar = () => {
+const Sidebar = ({ photoURL, rooms, setActiveRoom, openModal, currentSearch, setCurrentSearch }) => {
+
+  const setRoom = (roomName, roomId) => {
+    setActiveRoom({
+      name: roomName,
+      id: roomId
+    });
+  }
+
   return (
     <div className="sidebar">
       
       <div className="sidebar__header">
-        <Avatar />
+        <Avatar src={ photoURL }/>
         <div className="sidebar__headerRight">
-          <IconButton>
-            <LargeDonutIcon />
-          </IconButton>
-
-          <IconButton>
-            <ChatIcon /> 
-          </IconButton>
-
-          <IconButton>
-            <MoreVertIcon />
+          <IconButton onClick={openModal}>
+            <AddIcon />
           </IconButton>
         </div>
       </div>
@@ -33,15 +31,16 @@ const Sidebar = () => {
       <div className="sidebar__search">
         <div className="sidebar__searchContainer">
           <SearchOutlined />
-          <input type="text" placeholder="Search ..."/>
+          <input type="text" value={currentSearch} onChange={e => setCurrentSearch(e.target.value)} placeholder="Search Current Chat..."/>
         </div>
       </div>
 
       <div className="sidebar__chats">
-        <SidebarChat />
-        <SidebarChat />
-        <SidebarChat />
-        <SidebarChat />
+        {
+          rooms.map((room) => (
+            <SidebarChat onClick={setRoom} key={room._id} id={room._id} name={room.name}/>
+          ))
+        }
       </div>
 
     </div>
